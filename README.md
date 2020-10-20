@@ -10,4 +10,13 @@ Laboratory work for Network Programming university course
 7. Once you fetch all the data, convert it to a common representation, doesn't matter what this representation is
 8. The final part of the lab is to make a concurrent TCP server, serving the fetched content, that will respond to (mandatory) a column selector message, like `SelectColumn column_name`, and (optional) `SelectFromColumn column_name glob_pattern`
 
+## Requirements
+* **Java Version** : 14.0.2
+* **Docker Container**: alexburlacu/pr-server
+
 ## Implementation
+### Run
+1. Pull docker image: ```` docker pull alexburlacu/pr-server ````
+2. Run Image: ```` docker run -p 5000:5000 <imageId>````
+3. Run project
+4. Connect to TCP Server : ```telnet <ip> <port>```

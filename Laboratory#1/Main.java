@@ -1,16 +1,9 @@
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
-import java.io.*;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class Main {
     private static final String registerURL = "/register";
@@ -21,7 +14,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
 
-        String string = getAccessToken.getToken(registerURL, data);
+        String string = (String) getAccessToken.getToken(registerURL, data);
 //        System.out.println("Register JSON: " + string);
 
         try {
@@ -42,7 +35,7 @@ public class Main {
         System.out.println("Access token: " + accessToken);
         System.out.println("Route: " + link);
 
-        String homeLink = getAccessToken.getToken(homeURL, accessToken);
+        String homeLink = (String) getAccessToken.getToken(homeURL, accessToken);
         System.out.println("\nHome: " + homeLink);
 
         try {
@@ -66,4 +59,3 @@ public class Main {
 //        System.out.println("Message: " + message);
 //        System.out.println("Links: " + link1);
 }
-

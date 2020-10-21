@@ -1,28 +1,32 @@
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.io.FileReader;
-import java.net.*;
 import java.io.*;
-import java.net.URLConnection;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Main {
-    private static final String rootURL = "http://localhost:5000";
-    private static final String registerURL = rootURL + "/register";
-    private static final String home = rootURL + "/home";
+    private static final String registerURL = "/register";
+    private static final String homeURL = "/home";
     private static final String data = "";
 
 
     public static void main(String[] args) throws Exception {
-        URL oracle = new URL(registerURL);
-        URLConnection yc = oracle.openConnection();
-        BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-        String inputLine = in.readLine();
 
-//        System.out.println(inputLine);
+
+        String string = getAccessToken.getToken(registerURL, data);
+//        System.out.println("Register JSON: " + string);
 
         try {
             FileWriter myWriter = new FileWriter("register.json");
-            myWriter.write(inputLine);
+            myWriter.write(string);
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -34,9 +38,32 @@ public class Main {
         String accessToken = (String) jo.get("access_token");
         String link = (String) jo.get("link");
 
+        System.out.println("Register:");
         System.out.println("Access token: " + accessToken);
         System.out.println("Route: " + link);
 
+        String homeLink = getAccessToken.getToken(homeURL, accessToken);
+        System.out.println("\nHome: " + homeLink);
+
+        try {
+            FileWriter myWriter1 = new FileWriter("home.json");
+            myWriter1.write(homeLink);
+            myWriter1.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
 
     }
+//        Object obj1 = new JSONParser().parse(new FileReader("home.json"));
+//        JSONObject jo1 = (JSONObject) obj1;
+//        String message = (String) jo1.get("msg");
+//        String link1 = (String) jo1.get("link");
+//
+//
+//        System.out.println("\nHome:");
+//        System.out.println("Message: " + message);
+//        System.out.println("Links: " + link1);
 }
+

@@ -19,4 +19,3 @@ Laboratory work for Network Programming university course
 1. Pull docker image: ```` docker pull alexburlacu/pr-server ````
 2. Run Image: ```` docker run -p 5000:5000 <imageId>````
 3. Run project
-4. Connect to TCP Server : ```telnet <ip> <port>```

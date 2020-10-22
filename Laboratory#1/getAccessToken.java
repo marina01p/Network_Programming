@@ -6,17 +6,17 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-public class getAccessToken{
+public class GetAccessToken {
     private static final String rootURL = "http://localhost:5000";
     private static HttpURLConnection connection;
 
-    public static Object getToken(String link, String header) {
+    public static Object getAccessToken(String link, String header) {
         try {
             URL url = new URL(rootURL + link);
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("X-Access-Token", header);
-            connection.setReadTimeout(30000);
+//            connection.setReadTimeout(30000);
             connection.setUseCaches(false);
             connection.setAllowUserInteraction(false);
             connection.connect();

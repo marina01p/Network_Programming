@@ -1,75 +1,62 @@
 package utilities;
-
-import junit.framework.Assert;
-import org.junit.Test;
-
-import javax.crypto.*;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.*;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.Random;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 public class DiffieHellman {
 
-    private DiffieHellman AESUtil;
-    private Assert Assertions;
+    private static SecretKeySpec secretKey;
+    private static byte[] key;
 
-    // generate a secret key
-    public static SecretKey generateKey(int n) throws NoSuchAlgorithmException {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
-        keyGenerator.init(n);
-        SecretKey key = keyGenerator.generateKey();
-        return key;
+
+    public static String generatePublicKey() {
+        Random random = new Random(40);
+        for(int i = 0; i < 5; i++) {
+        } return String.valueOf(random.nextInt(100));
     }
 
-    // generate an random IV (pseudo-random value which
-    // has the same size as the block that is encrypted)
-
-    public static IvParameterSpec generateIv() {
-        byte[] iv = new byte[16];
-        new SecureRandom().nextBytes(iv);
-        return new IvParameterSpec(iv);
+    public static void setKey(String myKey) {
+        MessageDigest sha;
+        try {
+            key = myKey.getBytes("UTF-8");
+            sha = MessageDigest.getInstance("SHA-1");
+            key = sha.digest(key);
+            key = Arrays.copyOf(key, 16);
+            secretKey = new SecretKeySpec(key, "AES");
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
-    // Encryption and Decryption
-
-    // encryption
-    // We create an instance from the cipher class by using the getInstance() method
-    // we configure a cipher instance using the init() method with a secret key, IV, and encryption mode
-    // Finally, we encrypt the input string by invoking the doFinal() method.
-    // This method gets bytes of input and returns ciphertext in bytes
-
-    public static String encrypt(String algorithm, String input, SecretKey key,
-                                 IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException,
-            InvalidAlgorithmParameterException, InvalidKeyException,
-            BadPaddingException, IllegalBlockSizeException {
-
-        Cipher cipher = Cipher.getInstance(algorithm);
-        cipher.init(Cipher.ENCRYPT_MODE, key, iv);
-        byte[] cipherText = cipher.doFinal(input.getBytes());
-        return Base64.getEncoder().encodeToString(cipherText);
+    public static String encrypt(String encryptString, String secret) {
+        try {
+            setKey(secret);
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            return Base64.getEncoder().encodeToString(cipher.doFinal(encryptString.getBytes("UTF-8")));
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.toString());
+        }
+        return null;
     }
 
-    // for decrypting an input string we can initialize out cipher using the DECRYPT_MODE to decrypt the content
-
-    public static String decrypt(String algorithm, String cipherText, SecretKey key,
-                                 IvParameterSpec iv) throws NoSuchPaddingException, NoSuchAlgorithmException,
-            InvalidAlgorithmParameterException, InvalidKeyException,
-            BadPaddingException, IllegalBlockSizeException {
-
-        Cipher cipher = Cipher.getInstance(algorithm);
-        cipher.init(Cipher.DECRYPT_MODE, key, iv);
-        byte[] plainText = cipher.doFinal(Base64.getDecoder().decode(cipherText));
-        return new String(plainText);
+    public static String decrypt(String decryptString, String secret) {
+        try {
+            setKey(secret);
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            return new String(cipher.doFinal(Base64.getDecoder().decode(decryptString)));
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.toString());
+        }
+        return null;
     }
-
 
 
 }

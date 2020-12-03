@@ -53,7 +53,9 @@ something that resembles an HTTP client API is a recommended source of inspirati
 ![alt text](https://github.com/marina01p/Network_Programming/blob/master/Laboratory%232/scr/screenshots/screen1.png)
 
 ![alt text](https://github.com/marina01p/Network_Programming/blob/master/Laboratory%232/scr/screenshots/screen2.png)
-For error checking, I calculated the checksum with utilities.ErrorChecker
+
+For error checking, I calculated the checksum with utilities.ErrorChecker - getCRC32Checksum:
+
  ```   
 public static long getCRC32Checksum(byte[] bytes) {
         Checksum crc32 = new CRC32();
@@ -61,7 +63,9 @@ public static long getCRC32Checksum(byte[] bytes) {
         return crc32.getValue();
     }
 ```
-Regarding the retransmission, I've used a variable, called RETRANSMISSION (duh! ) , which limits the do-while loop to 3 tries of sending data. It has a timeout of 1000ms as well.
+
+Regarding the retransmission, I've used a variable, called RETRANSMISSION (duh! ), which limits the do-while loop to 3 tries of sending data. It has a timeout of 1000ms as well.
+
 ```(!echoString.equals("exit") && (tries < RETRANSMISSION ));```
 
 ![alt text](https://github.com/marina01p/Network_Programming/blob/master/Laboratory%232/scr/screenshots/screen3.png)
@@ -85,6 +89,7 @@ String decryptedString = DiffieHellman.decrypt(returnString, secretKey);
 ## Setup
 1. Run server.Main
 2. Run client.Main
+
 ## Status
 Not finished.
 

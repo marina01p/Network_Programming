@@ -4,7 +4,7 @@
 
 ## Table of contents
 * [Introduction](#introduction)
-* [Task](#task)
+* [Tasks](#tasks)
 * [Technologies](#technologies)
 * [Implementation](#implementation)
 * [Setup](#setup)

@@ -50,6 +50,9 @@ something that resembles an HTTP client API is a recommended source of inspirati
         Server server = new Server();
         server.newServer();
 ```
+![alt text](https://github.com/marina01p/Network_Programming/blob/master/Laboratory%232/scr/screenshots/screen1.png)
+
+![alt text](https://github.com/marina01p/Network_Programming/blob/master/Laboratory%232/scr/screenshots/screen2.png)
 For error checking, I calculated the checksum with utilities.ErrorChecker
  ```   
 public static long getCRC32Checksum(byte[] bytes) {
@@ -60,6 +63,8 @@ public static long getCRC32Checksum(byte[] bytes) {
 ```
 Regarding the retransmission, I've used a variable, called RETRANSMISSION (duh! ) , which limits the do-while loop to 3 tries of sending data. It has a timeout of 1000ms as well.
 ```(!echoString.equals("exit") && (tries < RETRANSMISSION ));```
+
+![alt text](https://github.com/marina01p/Network_Programming/blob/master/Laboratory%232/scr/screenshots/screen3.png)
 
 2. In order for the connection to be secure, I used the Diffie Hellman key exchange method.
 The traffic is secured with the help of an AES algorithm, and a "AES/ECB/PKCS5Padding" cipher transformation. 
